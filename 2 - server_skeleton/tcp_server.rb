@@ -1,4 +1,5 @@
 require 'socket'
+require_relative 'lib/request.rb'
 
 class HTTPServer
 
@@ -20,7 +21,9 @@ class HTTPServer
       puts data
       puts '-' * 80
 
-      #request = Request.new(data)
+      request = Request.new(data)
+
+      p request
 
       html = "<h1>Hello, World!</h1>"
 

@@ -2,9 +2,8 @@ class Request
     attr_reader :method, :resource, :version, :headers, :params
 
     def initialize(http_request)
-        lines = http_request.split("\n")
+        lines = http_request.split(/\r?\n/)
 
-        
         # get method, full path and version from first line
         @method, full_path, @version = lines[0].split(" ")
 
@@ -29,6 +28,8 @@ class Request
     end
 end
 
-#contents = File.read('../get-fruits-with-filter.request.txt')
-
+#contents = File.read('../test/fake-requests/get-examples.request.txt')
+#contents = File.read('../test/fake-requests/get-fruits-with-filter.request.txt')
+#contents = File.read('../test/fake-requests/get-index.request.txt')
+#contents = File.read('../test/fake-requests/post-login.request.txt')
 #test_request = Request.new(contents)

@@ -1,5 +1,6 @@
 require 'socket'
 require_relative 'lib/request.rb'
+require_relative 'lib/response.rb'
 
 class HTTPServer
 
@@ -22,13 +23,24 @@ class HTTPServer
       puts '-' * 80
 
       request = Request.new(data)
+      path = request.resource
 
-      p request
+      paths = {
+        index: "/",
+        info: "/info"
+      }
 
-      html = "<h1>Hello, World!</h1>"
+      html = ""
+      
+      if paths.value?(path)
+        key = paths.key(path)
+        html = File.read("views/#{key}.html")
+      else
+        html = File.read("views/404.html")
+      end
 
       session.print "HTTP/1.1 200\r\n"
-      session.print "Content-Type: text/html\r\n"
+      session.print "Content-Type: image/png\r\n"
       session.print "\r\n"
       session.print html
       session.close

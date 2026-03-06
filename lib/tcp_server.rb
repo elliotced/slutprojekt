@@ -1,20 +1,21 @@
 require 'socket'
-require_relative 'lib/request.rb'
-require_relative 'lib/response.rb'
-require_relative 'lib/router.rb'
+require_relative 'request.rb'
+require_relative 'response.rb'
 
 class HTTPServer
 
-  def initialize(port)
+  def initialize(router, port)
     # give port var its value for use when starting server
     @port = port
+    @router = router
   end
 
   def start
     # start server and print information to terminal
     server = TCPServer.new(@port)
+    puts "\nServer started"
     puts "Listening on #{@port}"
-    puts "http://localhost:4567"
+    puts "http://localhost:4567\n\n"
 
     # wait until a user connects to server
     while session = server.accept
@@ -23,25 +24,16 @@ class HTTPServer
       while line = session.gets and line !~ /^\s*$/
         data += line
       end
-      puts '-' * 80
-      puts data
-      puts '-' * 80
 
       # get data from request
       request = Request.new(data)
 
-      router = Router.new(request.resource)
-      router.get_file_path
-      
-      response = Response.new(router.file_path)
+      router.match(request)    
 
-      session.print
-      session.close
+      #response = Response.new(file_path)
+      #session.print response.build
+      #session.close
       
     end
   end
 end
-
-# create new server object and start it with port 4567
-server = HTTPServer.new(4567)
-server.start

@@ -2,6 +2,7 @@ class Request
     attr_reader :method, :resource, :version, :headers, :params
 
     def initialize(http_request)
+
         lines = http_request.split(/\r?\n/)
 
         # get method, full path and version from first line

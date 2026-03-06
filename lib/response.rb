@@ -1,9 +1,8 @@
 class Response
 
-    def initialize(status, headers, body)
+    def initialize(status, path)
         @status = status
-        @headers = headers
-        @body = body
+        @path = path
     end
 
     def build

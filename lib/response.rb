@@ -1,8 +1,9 @@
 class Response
 
-    def initialize(status, path)
+    def initialize(status, body, type)
         @status = status
-        @path = path
+        @body = body
+        @type = type
     end
 
     def build
@@ -11,9 +12,9 @@ class Response
         # status line
         output = "HTTP/1.1 #{@status}\r\n"
         # headers
-        for header in @headers
-            output << header
-        end
+        output << "Content-Type: #{@type}\r\n"
+        output << "Content-Length: #{@body.bytesize}\r\n"
+        output << "Connection: close\r\n"
         # empty line
         output << "\r\n"
         # body

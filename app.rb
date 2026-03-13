@@ -4,11 +4,11 @@ require_relative 'lib/tcp_server.rb'
 router = Router.new
 
 router.get('/') do
-    File.read('index.html')
+    File.read('views/index.html')
 end
 
 router.get('/info') do
-    File.read('info.html')
+    File.read('views/info.html')
 end
 
 router.get('/add/:num1/:num2') do |num1, num2| 

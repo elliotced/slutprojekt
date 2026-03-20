@@ -1,18 +1,26 @@
 require_relative 'lib/router.rb'
+require_relative 'lib/render.rb'
 require_relative 'lib/tcp_server.rb'
 
 router = Router.new
 
 router.get('/') do
-    File.read('views/index.html')
+    @content = ERB.new(File.read('views/index.erb')).result(binding)
+    template = ERB.new(File.read('views/layout.erb')).result(binding)
 end
 
 router.get('/info') do
-    File.read('views/info.html')
+    @content = ERB.new(File.read('views/info.erb')).result(binding)
+    template = ERB.new(File.read('views/layout.erb')).result(binding)
 end
 
-router.get('/add/:num1/:num2') do |num1, num2| 
-    return (num1+num2).to_s
+router.get('/fruit/:id') do | id |
+    @fruit = id
+
+    @content = ERB.new(File.read('views/fruit/show.erb')).result(binding)
+    template = ERB.new(File.read('views/layout.erb')).result(binding)
+
+    #Render.render_erb('views/fruit/show.erb')
 end
 
 

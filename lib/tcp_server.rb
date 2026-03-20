@@ -29,19 +29,25 @@ class HTTPServer
       request = Request.new(data)
 
       # match request to route
-      route = @router.match(request)
+      match = @router.match(request)
+      route = nil
+      dynamic = nil
+      if match
+        route = match[0]
+        dynamic = match[1]
+      end
       status = ""
       body = ""
       type = ""
 
       # get correct response arguments from route
       if route
-        # views/ html docs
+        # routes
         status = "200 OK"
-        body = route[:block].call
+        body = route[:block].call(dynamic)
         type = "text/html"
       elsif File.exist?(request.resource.delete_prefix("/"))
-        # public/ files
+        # static files
         status = "200 OK"
         path = request.resource.delete_prefix("/")
         body = File.binread(path)
@@ -49,7 +55,7 @@ class HTTPServer
       else
         # 404 not found
         status = "404 Not Found"
-        body = File.read("views/404.html")
+        body = File.read("views/404.erb")
         type = "text/html"
       end
 

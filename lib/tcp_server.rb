@@ -17,7 +17,7 @@ class HTTPServer
     puts "\nServer started"
     puts "http://localhost:#{@port}\n\n"
 
-    # wait until a user connects to server
+    # wait until a user connects server
     while session = server.accept
       # create data
       data = ''
@@ -55,7 +55,8 @@ class HTTPServer
       else
         # 404 not found
         status = "404 Not Found"
-        body = File.read("views/404.erb")
+        show = "views/404.erb"
+        body = Render.render_erb(show)
         type = "text/html"
       end
 

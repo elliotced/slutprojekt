@@ -5,22 +5,24 @@ require_relative 'lib/tcp_server.rb'
 router = Router.new
 
 router.get('/') do
-    @content = ERB.new(File.read('views/index.erb')).result(binding)
-    template = ERB.new(File.read('views/layout.erb')).result(binding)
+    show = 'views/index.erb'
+
+    Render.render_erb(show)
 end
 
 router.get('/info') do
-    @content = ERB.new(File.read('views/info.erb')).result(binding)
-    template = ERB.new(File.read('views/layout.erb')).result(binding)
+    show = 'views/info.erb'
+
+    Render.render_erb(show)
 end
 
 router.get('/fruit/:id') do | id |
-    @fruit = id
+    show = 'views/fruit/show.erb'
+    locals = {
+    "id" => id
+    }
 
-    @content = ERB.new(File.read('views/fruit/show.erb')).result(binding)
-    template = ERB.new(File.read('views/layout.erb')).result(binding)
-
-    #Render.render_erb('views/fruit/show.erb')
+    Render.render_erb(show, locals)
 end
 
 

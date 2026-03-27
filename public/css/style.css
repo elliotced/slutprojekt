@@ -10,6 +10,14 @@ strong {
     color: black;
 }
 
+h1 {
+    font-weight: bold;
+}
+
+h2 {
+    font-weight: lighter;
+}
+
 a {
     color: #008080;
 }

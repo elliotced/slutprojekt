@@ -29,13 +29,7 @@ class HTTPServer
       request = Request.new(data)
 
       # match request to route
-      match = @router.match(request)
-      route = nil
-      dynamic = nil
-      if match
-        route = match[0]
-        dynamic = match[1]
-      end
+      route = @router.match(request)
       status = ""
       body = ""
       type = ""
@@ -44,7 +38,7 @@ class HTTPServer
       if route
         # routes
         status = "200 OK"
-        body = route[:block].call(dynamic)
+        body = route[:block].call
         type = "text/html"
       elsif File.exist?(request.resource.delete_prefix("/"))
         # static files

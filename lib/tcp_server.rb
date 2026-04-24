@@ -1,7 +1,6 @@
 require 'socket'
 require_relative 'request.rb'
 require_relative 'response.rb'
-require_relative 'mime.rb'
 
 class HTTPServer
 
@@ -27,35 +26,11 @@ class HTTPServer
 
       # create request from data
       request = Request.new(data)
-
       # match request to route
       route = @router.match(request)
-      status = ""
-      body = ""
-      type = ""
-
-      # get correct response arguments from route
-      if route
-        # routes
-        status = "200 OK"
-        body = route[:block].call
-        type = "text/html"
-      elsif File.exist?(request.resource.delete_prefix("/"))
-        # static files
-        status = "200 OK"
-        path = request.resource.delete_prefix("/")
-        body = File.binread(path)
-        type = Mime.get_type(File.extname(path))
-      else
-        # 404 not found
-        status = "404 Not Found"
-        show = "views/404.erb"
-        body = Render.render_erb(show)
-        type = "text/html"
-      end
 
       # create response
-      response = Response.new(status, body, type)
+      response = Response.new(request, route)
 
       # build and print response
       session.print response.build

@@ -1,5 +1,6 @@
 require_relative 'lib/router.rb'
 require_relative 'lib/render.rb'
+require_relative 'lib/redirect.rb'
 require_relative 'lib/tcp_server.rb'
 
 router = Router.new
@@ -20,6 +21,20 @@ router.get('/fruit/:id') do | id |
     show = 'views/fruit/show.erb'
     locals = {
     "id" => id
+    }
+
+    Render.render_erb(show, locals)
+end
+
+router.post('/redirect') do
+    Redirect.new('/info')
+end
+
+router.get('/fruit/:id/data/:id2') do | id1, id2 |
+    show = 'views/fruit/data.erb'
+    locals = {
+    "id1" => id1,
+    "id2" => id2
     }
 
     Render.render_erb(show, locals)

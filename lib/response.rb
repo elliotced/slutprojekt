@@ -9,6 +9,9 @@ class Response
         @route = route
     end
 
+    # Creates different responses depending on route
+    # 
+    # @return [Array] array containing all lines of the response
     def build
 
         @status = ""
@@ -50,6 +53,7 @@ class Response
         # status line
         output = "HTTP/1.1 #{@status}\r\n"
         # headers
+        output << 'Set-Cookie: session={"id": 1}; Path=/;'
         output << "Content-Type: #{@type}\r\n"
         output << "Content-Length: #{@body.bytesize}\r\n"
         output << "Connection: close\r\n"

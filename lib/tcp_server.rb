@@ -1,4 +1,5 @@
 require 'socket'
+require 'json'
 require_relative 'request.rb'
 require_relative 'response.rb'
 
@@ -26,6 +27,10 @@ class HTTPServer
 
       # create request from data
       request = Request.new(data)
+      cookie = request.headers["Cookie"]
+      name, plain_value = cookie.split("=", 2)
+      parsed_value = JSON.parse(plain_value)
+      p parsed_value["id"]
       # match request to route
       route = @router.match(request)
 

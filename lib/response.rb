@@ -2,11 +2,16 @@ require_relative 'mime.rb'
 require_relative 'render.rb'
 require_relative 'redirect.rb'
 
+# Creates a response for the user 
+#
+# @example Creating a response
+#   response = Response.new(request, route, @sessionid)
 class Response
 
-    def initialize(request, route)
+    def initialize(request, route, sessionid)
         @request = request
         @route = route
+        @sessionid = sessionid
     end
 
     # Creates different responses depending on route
@@ -53,7 +58,7 @@ class Response
         # status line
         output = "HTTP/1.1 #{@status}\r\n"
         # headers
-        output << 'Set-Cookie: session={"id": 1}; Path=/;'
+        output << "Set-Cookie: sessionid=#{@sessionid}; Path=/;"
         output << "Content-Type: #{@type}\r\n"
         output << "Content-Length: #{@body.bytesize}\r\n"
         output << "Connection: close\r\n"

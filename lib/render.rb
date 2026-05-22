@@ -1,5 +1,15 @@
 require 'erb'
 
+# Renders an erb document
+#
+# @example Creating routes
+#   show = 'views/fruit/data.erb'
+#   locals = {
+#   "id1" => id1,
+#   "id2" => id2
+#   }
+#
+#   Render.render_erb(show, locals)
 class Render
   # Creates an erb doc
   # 

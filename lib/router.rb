@@ -1,4 +1,16 @@
-
+# Handles route registration and route matching for HTTP requests
+#
+# @example Creating routes
+#   router = Router.new
+#
+#   router.get('/info') do
+#       show = 'views/info.erb'
+#       Render.render_erb(show)
+#   end
+#
+#   router.post('/redirect') do
+#       Redirect.new('/info')
+#   end
 class Router
 
     def initialize

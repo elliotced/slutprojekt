@@ -1,3 +1,12 @@
+# Uses request data and transforms it into variables that can be accesed with the object.
+#
+# @example Creating a request
+#   data = ''
+#   while line = session.gets and line !~ /^\s*$/
+#       data += line
+#   end
+#
+#   request = Request.new(data)
 class Request
     attr_reader :method, :resource, :version, :headers, :params
 

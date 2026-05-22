@@ -1,5 +1,9 @@
+# Matches a file extension name to its HTTP mime type
+#
+# @example Match a type
+#   @type = Mime.get_type(".html")
 class Mime
-    #https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types
     TYPES = {
     ".html" => "text/html",
     ".css"  => "text/css",
@@ -7,7 +11,8 @@ class Mime
     ".png"  => "image/png",
     ".jpg"  => "image/jpeg",
     ".jpeg" => "image/jpeg",
-    ".gif"  => "image/gif"
+    ".gif"  => "image/gif",
+    ".ico" => "image/vnd.microsoft.icon"
     }
 
 
